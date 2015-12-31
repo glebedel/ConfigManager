@@ -1,0 +1,35 @@
+{
+  "name": "config-manager",
+  "version": "0.0.8",
+  "description": "sets and get JSON object in localstorage with possible expiry date",
+  "main": "ConfigManager.js",
+  "scripts": {
+    "build": "babel ./src --out-dir ./",
+    "test": "jshint ./ && jest",
+    "prepublish": "npm run build && npm run test"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glebedel/ConfigManager.git"
+  },
+  "keywords": [
+    "localStorage",
+    "config"
+  ],
+  "author": "guillaume.lebedel@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/glebedel/ConfigManager/issues"
+  },
+  "homepage": "https://github.com/glebedel/ConfigManager#readme",
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "jest": "^0.1.40",
+    "jshint": "^2.8.0"
+  }
+}
