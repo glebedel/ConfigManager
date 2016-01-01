@@ -13,7 +13,7 @@ export default class ConfigManager {
     static setConfig(item, itemContent, expirySeconds) {
         if (!item || !item.length || !itemContent)
             return;
-        ConfigManager.setExpiry(expirySeconds);
+        ConfigManager.setExpiry(item, expirySeconds);
         return localStorage.setItem(item, JSON.stringify(itemContent));
     }
 
@@ -26,7 +26,9 @@ export default class ConfigManager {
     static getExpiry(item) {
         return parseInt(localStorage.getItem(item + ConfigManager.EXPIRY_SUFFIX));
     }
-
+    static removeExpiry(item){
+        return localStorage.removeItem(item + ConfigManager.EXPIRY_SUFFIX);
+    }
     static isExpired(item) {
         let expTimestamp = ConfigManager.getExpiry(item);
         if (expTimestamp) {
@@ -38,13 +40,16 @@ export default class ConfigManager {
     static getConfig(item) {
         if (!item || !item.length)
             return null;
-        return JSON.parse(localStorage.getItem(item));
+        if (ConfigManager.isExpired(item))
+            ConfigManager.removeConfig(item);
+        let content = localStorage.getItem(item);
+        return content && JSON.parse(content);
     }
 
     static removeConfig(item) {
         if (!item || !item.length)
             return null;
-        localStorage.removeItem(item + ConfigManager.EXPIRY_SUFFIX);
+        ConfigManager.removeExpiry(item);
         return localStorage.removeItem(item);
     }
 }

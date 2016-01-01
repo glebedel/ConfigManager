@@ -21,11 +21,16 @@ var ConfigManager = (function () {
 
     _createClass(ConfigManager, null, [{
         key: "setConfig",
+
+        //set the javascript content in localstorage
         value: function setConfig(item, itemContent, expirySeconds) {
             if (!item || !item.length || !itemContent) return;
-            ConfigManager.setExpiry(expirySeconds);
+            ConfigManager.setExpiry(item, expirySeconds);
             return localStorage.setItem(item, JSON.stringify(itemContent));
         }
+
+        //add an expiry timestamp for specific config item
+
     }, {
         key: "setExpiry",
         value: function setExpiry(item, expirySeconds) {
@@ -35,6 +40,11 @@ var ConfigManager = (function () {
         key: "getExpiry",
         value: function getExpiry(item) {
             return parseInt(localStorage.getItem(item + ConfigManager.EXPIRY_SUFFIX));
+        }
+    }, {
+        key: "removeExpiry",
+        value: function removeExpiry(item) {
+            return localStorage.removeItem(item + ConfigManager.EXPIRY_SUFFIX);
         }
     }, {
         key: "isExpired",
@@ -49,12 +59,15 @@ var ConfigManager = (function () {
         key: "getConfig",
         value: function getConfig(item) {
             if (!item || !item.length) return null;
-            return JSON.parse(localStorage.getItem(item));
+            if (ConfigManager.isExpired(item)) ConfigManager.removeConfig(item);
+            var content = localStorage.getItem(item);
+            return content && JSON.parse(content);
         }
     }, {
         key: "removeConfig",
         value: function removeConfig(item) {
             if (!item || !item.length) return null;
+            ConfigManager.removeExpiry(item);
             return localStorage.removeItem(item);
         }
     }, {
