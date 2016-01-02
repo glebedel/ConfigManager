@@ -15,7 +15,7 @@ These are the few operations you can make with ConfigManager to set-up a config 
 ### Install and use in your project
 
 ```
-npm install --save local-configmanager
+npm install --save localstorage-configmanager
 ```
 ### Set a javascript variable into configuration:
 
