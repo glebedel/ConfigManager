@@ -28,6 +28,7 @@ ConfigManager.setConfig("myConfig", config);
 
 ```javascript
 ConfigManager.getConfig("myConfig");
+//Object {name: "Guillaume Lebedel", age: 99}
 ```
 
 ### Augmenting or incrementing config data:
@@ -37,12 +38,16 @@ You can augment/assign your config with another javascript object
 ```javascript
 ConfigManager.assignToConfig("myConfig", {age:24});
 ConfigManager.addToConfigProperties("myConfig", {age:1});
+ConfigManager.getConfig("myConfig");
+//Object {name: "Guillaume Lebedel", age: 25}
 ```
 
 ### Remove the configuration
 
 ```javascript
 ConfigManager.removeConfig("myConfig");
+ConfigManager.getConfig("myConfig");
+//null
 ```
 
 <br/>
@@ -61,5 +66,18 @@ ConfigManager.setConfig("myConfig", {a:1}, 5) //expires in 5 seconds
 ### Or Set an expiry date after creating the store
 
 ```javascript
-ConfigManager.setExpiry("myConfig", 2) //expires in 5 seconds
+ConfigManager.setExpiry("myConfig", 20) //expires in 20 seconds
+```
+
+### Which you can get:
+
+```javascript
+ConfigManager.getExpiry("myConfig");
+```
+
+### You can also verify how many seconds are left until expiry
+
+```javascript
+ConfigManager.getSecondsUntilExpiry("myConfig");
+//20
 ```
