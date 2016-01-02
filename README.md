@@ -51,6 +51,7 @@ ConfigManager.getConfig("myConfig");
 ```
 
 <br/>
+
 ## Expiry
 
 You can set an expiry time in seconds to your configs upon creation or later on.
