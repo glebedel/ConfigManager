@@ -6,10 +6,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Created by guillaume lebedel on 18/12/15.
+ * ConfigManager is a simple interface on top of localStorage to handle expiry of data
+ * and easy storing of javascript objects.
  */
 
 /*global localStorage: false, console: false, $: false */
@@ -22,13 +26,42 @@ var ConfigManager = (function () {
     _createClass(ConfigManager, null, [{
         key: "setConfig",
 
-        //set the javascript content in localstorage
+        /**
+         * sets a config data (in localStorage)
+         * @param {string} item key used for storing in localStorage
+         * @param {object} itemContent content which will be stored under that key
+         * @param {number} expirySeconds in how many seconds will that key/value pair expire
+         * @returns undefined
+         */
         value: function setConfig(item, itemContent, expirySeconds) {
             if (!item || !item.length || !itemContent) return;
             ConfigManager.setExpiry(item, expirySeconds);
-            return localStorage.setItem(item, JSON.stringify(itemContent));
+            localStorage.setItem(item, JSON.stringify(itemContent));
         }
 
+        //augment a config object with passed by newContent
+
+    }, {
+        key: "assignToConfig",
+        value: function assignToConfig(item, newContent) {
+            if (!item || !item.length || !newContent) return;
+            var currentConfig = ConfigManager.getConfig(item);
+            if (currentConfig === null) return ConfigManager.setConfig(item, newContent);else if ((typeof currentConfig === "undefined" ? "undefined" : _typeof(currentConfig)) === "object") return ConfigManager.setConfig(item, Object.assign(currentConfig, newContent));
+        }
+        //increment or append data to a property of a config content
+
+    }, {
+        key: "addToConfigProperties",
+        value: function addToConfigProperties(item, contentToAdd) {
+            if (!item || !item.length || !contentToAdd || (typeof contentToAdd === "undefined" ? "undefined" : _typeof(contentToAdd)) !== "object") return;
+            var currentConfig = ConfigManager.getConfig(item) || {};
+            if ((typeof currentConfig === "undefined" ? "undefined" : _typeof(currentConfig)) === "object") {
+                for (var key in contentToAdd) {
+                    currentConfig[key] = currentConfig[key] ? currentConfig[key] + contentToAdd[key] : contentToAdd[key];
+                }
+                return ConfigManager.setConfig(item, currentConfig);
+            }
+        }
         //add an expiry timestamp for specific config item
 
     }, {
