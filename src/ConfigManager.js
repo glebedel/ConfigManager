@@ -59,6 +59,10 @@ export default class ConfigManager {
     static removeExpiry(item){
         return localStorage.removeItem(item + ConfigManager.EXPIRY_SUFFIX);
     }
+    static getSecondsUntilExpiry(item){
+        let remaining =  (ConfigManager.getExpiry(item) - Date.now()) / 1000;
+        return (remaining <= 0 ? 0 : remaining);
+    }
     static isExpired(item) {
         let expTimestamp = ConfigManager.getExpiry(item);
         if (expTimestamp) {

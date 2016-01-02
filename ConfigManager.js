@@ -80,6 +80,12 @@ var ConfigManager = (function () {
             return localStorage.removeItem(item + ConfigManager.EXPIRY_SUFFIX);
         }
     }, {
+        key: "getSecondsUntilExpiry",
+        value: function getSecondsUntilExpiry(item) {
+            var remaining = (ConfigManager.getExpiry(item) - Date.now()) / 1000;
+            return remaining <= 0 ? 0 : remaining;
+        }
+    }, {
         key: "isExpired",
         value: function isExpired(item) {
             var expTimestamp = ConfigManager.getExpiry(item);

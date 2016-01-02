@@ -1,7 +1,7 @@
 {
   "name": "config-manager",
   "version": "0.0.8",
-  "description": "sets and get JSON object in localstorage with possible expiry date",
+  "description": "sets and get JSON object in localstorage with possible expiry in added seconds",
   "main": "ConfigManager.js",
   "scripts": {
     "build": "babel ./src --out-dir ./",

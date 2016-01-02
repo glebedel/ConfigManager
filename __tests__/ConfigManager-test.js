@@ -49,6 +49,7 @@ describe('setConfig', function () {
     });
     it('creates a new config with past and future expiry date', function () {
         ConfigManager.setConfig("test2", {a:1, b:2}, 20);
+        expect(ConfigManager.getSecondsUntilExpiry("test2")).toBe(20);
         expect(ConfigManager.getConfig("test2")).toBeTruthy();
         //config "test2" can be retrieved because of future expiry date
         expect(ConfigManager.getExpiry("test2")).toBeTruthy();
