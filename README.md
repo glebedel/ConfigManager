@@ -1,12 +1,10 @@
 
 # ConfigManager
-ConfigManager is a simple interface on top of localStorage to handle expiry of data
-and easy storing of javascript objects.
+ConfigManager is a simple interface on top of browsers' ```localStorage``` to handle expiry of data and easy storing of javascript objects.
 
-This library uses localStorage and if localStorage is not present, it will throw errors. 
-You can find a pollyfill for local storage [on mdn](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage)
+This library uses localStorage and if localStorage is not present, it will throw errors.  You can find a pollyfill for local storage [on mdn](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage)
 
-The tests are displayed under the ```__tests__``` folder and created with jest. You can launch them with ```npm test``` command. 
+The tests are under the ```__tests__``` folder and created using jest. You can launch them with ```npm test``` command. 
 <br/>
 
 ## Creating and modifying a config
